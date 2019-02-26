@@ -2,12 +2,18 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
-const AllProducts = props => {
-  return (
-    <div>
-      <h1>Testing, Testing 1...2...3!</h1>
-    </div>
-  )
+class AllProducts extends React.Component {
+  async componentDidMount() {}
+
+  render() {
+    return <h3>Test test test 123</h3>
+  }
 }
 
-export default AllProducts
+//Container
+
+const mapStateToProps = state => ({
+  products: products
+})
+
+export default connect()(AllProducts)
