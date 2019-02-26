@@ -7,22 +7,25 @@ import {Navbar} from './navbar'
 const adapter = new Adapter()
 enzyme.configure({adapter})
 
-// describe('Navbar', () => {
-//   let navbar
+console.log('Navbar 1: ', Navbar)
 
-//   beforeEach(() => {
-//     navbar = shallow(<Navbar />)
-//   })
+describe('Navbar', () => {
+  let navbar
 
-//   it('links to the login page', () => {
-//     expect(navbar.find('href').text()).to.be.equal('/login')
-//   })
+  beforeEach(() => {
+    console.log('Navbar: ', Navbar)
+    navbar = shallow(<Navbar />)
+  })
 
-//   it('links to the sign-up page', () => {
-//     expect(navbar.find('href').text()).to.be.equal('/signup')
-//   })
+  //   it('links to the login page', () => {
+  //     expect(navbar.find('href').text()).to.be.equal('/login')
+  //   })
 
-//   it('links to all the products if you aren\'t signed in', () => {
-//     expect(navbar.find('href').text()).to.be.equal('/')
-//   })
-// })
+  it('links to the sign-up page', () => {
+    expect(navbar.find('href')).to.be.equal('/signup')
+  })
+
+  it("links to all the products if you aren't signed in", () => {
+    expect(navbar.find('href').text()).to.be.equal('/')
+  })
+})

@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+export const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
     <h1>LIFE DRAMA</h1>
     <nav>
@@ -19,9 +19,14 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       ) : (
         <div>
           {/* The navbar will show these links before you log in */}
-          <Link to="/">Products</Link>
+          <Link to="/">Shop</Link>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
+          <Link to="/checkout">
+            {' '}
+            <img src="../../public/shopping-cart-icon.jpg" />{' '}
+          </Link>
+          {/* <Link to = "/checkout"> <img src='https://cdn1.vectorstock.com/i/1000x1000/25/70/shopping-cart-icon-vector-12712570.jpg' /> </Link> */}
         </div>
       )}
     </nav>
