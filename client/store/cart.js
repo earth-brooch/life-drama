@@ -5,6 +5,7 @@ import axios from 'axios'
  */
 const GOT_CART = 'GOT_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
+const UPDATED_CART = 'UPDATED_CART'
 /**
  * INITIAL STATE
  */
@@ -15,6 +16,8 @@ const defaultCart = []
  */
 const gotCart = products => ({type: GOT_CART, products})
 const addProduct = product => ({type: ADD_TO_CART, product})
+const updatedCart = productIdx => ({type: UPDATED_CART, productIdx})
+
 /**
  * THUNK CREATORS
  */
@@ -30,13 +33,24 @@ export const getCart = userId => async dispatch => {
 }
 
 export const postProduct = (userId, product) => async dispatch => {
+  product.quantity = 1
   try {
-    let productInfo = product
     if (userId) {
       const {data} = await axios.post(`/api/orders/${userId}`, product)
-      productInfo = data
+      product = data
     }
-    dispatch(addProduct(productInfo || []))
+    dispatch(addProduct(product || []))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const updateCart = (index, userId, productId) => async dispatch => {
+  try {
+    if (userId) {
+      const {data} = await axios.put(`/api/orders/${userId}`, productId)
+    }
+    dispatch(updatedCart(index))
   } catch (err) {
     console.error(err)
   }
@@ -50,8 +64,13 @@ export default function(state = defaultCart, action) {
     case GOT_CART:
       return action.products
     case ADD_TO_CART:
-      console.log('action.product: ', action.product)
       return [...state, action.product]
+    case UPDATED_CART: {
+      const newState = state.slice()
+      newState[action.productIdx].quantity =
+        newState[action.productIdx].quantity + 1
+      return newState
+    }
     default:
       return state
   }

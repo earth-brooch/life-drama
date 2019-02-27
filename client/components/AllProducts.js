@@ -2,14 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {getProducts} from '../store/product'
 import ProductList from './ProductList'
-import {postProduct} from '../store/cart'
+import {postProduct, updateCart} from '../store/cart'
 
 class AllProducts extends React.Component {
-  // constructor (props) {
-  //   super (props)
-  //   this.props.handleSubmit=this.props.handleSubmit.bind()
-  // }
-
   async componentDidMount() {
     await this.props.fetchProducts()
   }
@@ -36,7 +31,8 @@ class AllProducts extends React.Component {
                         this.props.handleSubmit(
                           event,
                           product,
-                          this.props.userId
+                          this.props.userId,
+                          this.props.cart
                         )
                       }}
                     >
@@ -59,7 +55,8 @@ class AllProducts extends React.Component {
 
 const mapStateToProps = state => ({
   products: state.product,
-  userId: state.user.id
+  userId: state.user.id,
+  cart: state.cart
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -67,13 +64,27 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getProducts())
   },
 
-  handleSubmit: (event, product, userId) => {
-    const data = {
-      purchasePrice: Number(product.price),
-      userId,
-      productId: product.id
+  handleSubmit: (event, product, userId, cart) => {
+    if (cart.length) {
+      let index
+      const foundItem = cart.filter((elem, idx) => {
+        if (elem.productId === product.id) {
+          index = idx
+          return true
+        }
+      })
+      if (foundItem.length) {
+        console.log('Found Item in HandleSubmit: ', foundItem)
+        dispatch(updateCart(index, userId, product.id))
+      }
+    } else {
+      const data = {
+        purchasePrice: Number(product.price),
+        userId,
+        productId: product.id
+      }
+      dispatch(postProduct(userId, data))
     }
-    dispatch(postProduct(userId, data))
   }
 })
 
