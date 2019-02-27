@@ -1,13 +1,39 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {getProducts} from '../store/product'
+import ProductList from './ProductList'
 
-const AllProducts = props => {
-  return (
-    <div>
-      <h1>Testing, Testing 1...2...3!</h1>
-    </div>
-  )
+class AllProducts extends React.Component {
+  async componentDidMount() {
+    await this.props.fetchProducts()
+  }
+
+  render() {
+    return (
+      <div>
+        {this.props.products.length ? (
+          <div>
+            <h2>Add Some Drama To Your Life With All These Fine Products!</h2>
+            <ProductList products={this.props.products} />
+          </div>
+        ) : (
+          <div> Wait just a moment please... </div>
+        )}
+      </div>
+    )
+  }
 }
 
-export default AllProducts
+//Container
+
+const mapStateToProps = state => ({
+  products: state.product
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchProducts: () => {
+    dispatch(getProducts())
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
