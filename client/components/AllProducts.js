@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {getProducts} from '../store/product'
 import ProductList from './ProductList'
+import {postProduct} from '../store/cart'
 
 class AllProducts extends React.Component {
   // constructor (props) {
@@ -67,14 +68,12 @@ const mapDispatchToProps = dispatch => ({
   },
 
   handleSubmit: (event, product, userId) => {
-    console.log('this is the event: ', event)
-    console.log('product', product)
     const data = {
-      purchasePrice: product.price,
+      purchasePrice: Number(product.price),
       userId,
       productId: product.id
     }
-    console.log('data: ', data)
+    dispatch(postProduct(userId, data))
   }
 })
 
