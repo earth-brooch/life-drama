@@ -20,7 +20,7 @@ async function seed() {
     Product.create({name: 'Love Triangle'}),
     Product.create({name: 'Evil Stepmother'}),
     Product.create({name: 'Chased by a Mob'}),
-    Product.create({name: 'In Love with a Criminal'})
+    Product.create({name: 'In Love with a Criminal'}
   ])
 
   console.log(`seeded ${users.length} users`)
