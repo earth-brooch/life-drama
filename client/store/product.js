@@ -3,12 +3,12 @@ import axios from 'axios'
 /**
  * ACTION TYPES
  */
-const GOT_PRODUCTS = 'GET_USER'
+const GOT_PRODUCTS = 'GOT_PRODUCTS'
 
 /**
  * INITIAL STATE
  */
-const defaultProducts = {}
+const defaultProducts = []
 
 /**
  * ACTION CREATORS
