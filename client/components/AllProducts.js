@@ -29,10 +29,14 @@ class AllProducts extends React.Component {
                     <h3>Description: {product.description}</h3>
                     <h3>Price: ${product.price}</h3>
                     <button
-                      type="submit"
+                      type="button"
                       name="add-to-cart"
                       onClick={() => {
-                        this.props.handleSubmit(product)
+                        this.props.handleSubmit(
+                          event,
+                          product,
+                          this.props.userId
+                        )
                       }}
                     >
                       Add To Cart
@@ -62,14 +66,15 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getProducts())
   },
 
-  handleSubmit: (evt, product) => {
-    // evt.preventDefault()
+  handleSubmit: (event, product, userId) => {
+    console.log('this is the event: ', event)
     console.log('product', product)
-    // const data = {
-    //   purchasePrice: product.price,
-    //   userId: this.props.userId,
-    //   productId: product.Id
-    // }
+    const data = {
+      purchasePrice: product.price,
+      userId,
+      productId: product.id
+    }
+    console.log('data: ', data)
   }
 })
 
