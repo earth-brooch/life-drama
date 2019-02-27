@@ -24,9 +24,8 @@ export const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/signup">Sign Up</Link>
           <Link to="/checkout">
             {' '}
-            <img src="../../public/shopping-cart-icon.jpg" />{' '}
+            <img src="/shopping-cart-icon.jpg" id="cart-icon" />{' '}
           </Link>
-          {/* <Link to = "/checkout"> <img src='https://cdn1.vectorstock.com/i/1000x1000/25/70/shopping-cart-icon-vector-12712570.jpg' /> </Link> */}
         </div>
       )}
     </nav>
