@@ -15,20 +15,8 @@ describe('Navbar', () => {
     navbar = shallow(<Navbar />)
   })
 
-  it('links to the login page', () => {
-    //     expect(navbar.find('href')).to.be.equal('/login')
-    expect(navbar.find(`a[href='/login']`)).to.be.present()
-  })
-
-  it('links to the sign-up page', () => {
-    expect(navbar.find('href')).to.be.equal('/signup')
-  })
-
-  it("links to all the products if you aren't signed in", () => {
-    expect(navbar.find('href').text()).to.be.equal('/')
-
   it('contains three Links', () => {
-    expect(navbar.find('Link').length).to.be.equal(3)
+    expect(navbar.find('Link').length).to.be.equal(4)
   })
 
   it('links to all the products', () => {
@@ -49,6 +37,5 @@ describe('Navbar', () => {
   it('links to the checkout page', () => {
     const allLinks = navbar.find('Link')
     expect(allLinks.at(3).prop('to')).to.be.equal('/checkout')
-
   })
 })

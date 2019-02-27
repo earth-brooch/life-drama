@@ -69,3 +69,5 @@ export default function(state = defaultUser, action) {
       return state
   }
 }
+
+///return {... state, [...state.cart, action.item]
