@@ -20,6 +20,18 @@ form div {
   display: inline-block;
 }
 
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 95%;
+}
+
+.product-thumb {
+  background-color: pink;
+  width: 25%;
+  padding: 2%;
+  margin: 1%;
+  
 #cart-icon {
   width: 45px;
   margin: 0 0 -10px 0;
