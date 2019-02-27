@@ -14,6 +14,15 @@ async function seed() {
   ])
 
   const product = await Promise.all([
+
+    Product.create({name: 'Dramatic Entrance', price: 50}),
+    Product.create({name: 'Evil Twin', price: 250}),
+    Product.create({name: 'Back from the Dead', price: 500}),
+    Product.create({name: 'Love Triangle', price: 80}),
+    Product.create({name: 'Evil Stepmother', price: 240}),
+    Product.create({name: 'Chased by a Mob', price: 75}),
+    Product.create({name: 'In Love with a Criminal', price: 1000})
+
     Product.create({name: 'Dramatic Entrance'}),
     Product.create({name: 'Evil Twin'}),
     Product.create({name: 'Back from the Dead'}),
@@ -21,6 +30,7 @@ async function seed() {
     Product.create({name: 'Evil Stepmother'}),
     Product.create({name: 'Chased by a Mob'}),
     Product.create({name: 'In Love with a Criminal'})
+
   ])
 
   console.log(`seeded ${users.length} users`)

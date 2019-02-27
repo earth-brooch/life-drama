@@ -19,9 +19,13 @@ export const Navbar = ({handleClick, isLoggedIn}) => (
       ) : (
         <div>
           {/* The navbar will show these links before you log in */}
-          <Link to="/">Products</Link>
+          <Link to="/">Shop</Link>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
+          <Link to="/checkout">
+            {' '}
+            <img src="/shopping-cart-icon.jpg" id="cart-icon" />{' '}
+          </Link>
         </div>
       )}
     </nav>
