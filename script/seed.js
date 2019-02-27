@@ -14,6 +14,7 @@ async function seed() {
   ])
 
   const product = await Promise.all([
+
     Product.create({name: 'Dramatic Entrance', price: 50}),
     Product.create({name: 'Evil Twin', price: 250}),
     Product.create({name: 'Back from the Dead', price: 500}),
