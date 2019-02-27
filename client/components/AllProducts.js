@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getProducts} from '../store/product'
+import ProductList from './ProductList'
 
 class AllProducts extends React.Component {
   async componentDidMount() {
@@ -12,16 +13,8 @@ class AllProducts extends React.Component {
       <div>
         {this.props.products.length ? (
           <div>
-            {this.props.products.map(product => {
-              return (
-                <div className="product-thumb" key={product.id}>
-                  <img src={product.imageUrl} />
-                  <h3>Name: {product.name}</h3>
-                  <h3>Description: {product.description}</h3>
-                  <h3>Price: ${product.price}</h3>
-                </div>
-              )
-            })}
+            <h2>Add Some Drama To Your Life With All These Fine Products!</h2>
+            <ProductList products={this.props.products} />
           </div>
         ) : (
           <div> Wait just a moment please... </div>
