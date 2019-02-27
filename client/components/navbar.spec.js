@@ -16,7 +16,7 @@ describe('Navbar', () => {
   })
 
   it('contains three Links', () => {
-    expect(navbar.find('Link').length).to.be.equal(3)
+    expect(navbar.find('Link').length).to.be.equal(4)
   })
 
   it('links to all the products', () => {
