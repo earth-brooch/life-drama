@@ -22,15 +22,6 @@ async function seed() {
     Product.create({name: 'Evil Stepmother', price: 240}),
     Product.create({name: 'Chased by a Mob', price: 75}),
     Product.create({name: 'In Love with a Criminal', price: 1000})
-
-    Product.create({name: 'Dramatic Entrance'}),
-    Product.create({name: 'Evil Twin'}),
-    Product.create({name: 'Back from the Dead'}),
-    Product.create({name: 'Love Triangle'}),
-    Product.create({name: 'Evil Stepmother'}),
-    Product.create({name: 'Chased by a Mob'}),
-    Product.create({name: 'In Love with a Criminal'})
-
   ])
 
   console.log(`seeded ${users.length} users`)
