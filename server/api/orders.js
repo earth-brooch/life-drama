@@ -1,10 +1,11 @@
 const router = require('express').Router()
+const User = require('../db/models/user')
 const Order = require('../db/models/order')
+const Product = require('../db/models/product')
 module.exports = router
 
 router.post('/:user', async (req, res, next) => {
   try {
-    console.log('reqbody', req.body)
     const {userId, productId, purchasePrice} = req.body
     const item = await Order.create({
       status: 'Cart',
@@ -20,12 +21,14 @@ router.post('/:user', async (req, res, next) => {
 
 router.get('/:user', async (req, res, next) => {
   try {
-    const userOrder = await Order.findAll({
+    const user = await User.findOne({
       where: {
-        userId: req.params.user
-      }
+        id: req.params.user
+      },
+      include: Product
     })
-    res.json(userOrder)
+    const userCart = user.products
+    res.json(userCart)
   } catch (err) {
     next(err)
   }
