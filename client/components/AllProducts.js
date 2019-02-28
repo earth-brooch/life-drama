@@ -4,7 +4,6 @@ import {getProducts} from '../store/product'
 import ProductList from './ProductList'
 import {postProduct, updateCart} from '../store/cart'
 
-
 class AllProducts extends React.Component {
   async componentDidMount() {
     await this.props.fetchProducts()
@@ -78,14 +77,12 @@ const mapDispatchToProps = dispatch => ({
         console.log('Found Item in HandleSubmit: ', foundItem)
         dispatch(updateCart(index, userId, product.id))
       }
-    } else {
-      const data = {
-        purchasePrice: Number(product.price),
-        userId,
-        productId: product.id
-      }
-      dispatch(postProduct(userId, data))
     }
+    const data = {
+      userId,
+      ...product
+    }
+    dispatch(postProduct(userId, data))
   }
 })
 
