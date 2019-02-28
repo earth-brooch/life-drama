@@ -74,7 +74,6 @@ const mapDispatchToProps = dispatch => ({
         }
       })
       if (foundItem.length) {
-        console.log('Found Item in HandleSubmit: ', foundItem)
         dispatch(updateCart(index, userId, product.id))
       }
     }
