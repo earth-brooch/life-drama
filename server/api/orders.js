@@ -36,6 +36,7 @@ router.get('/:user', async (req, res, next) => {
 })
 
 router.put('/:user', async (req, res, next) => {
+  console.log('req.body', req.body)
   try {
     const productToUpdate = await User.findOne({
       where: {
@@ -45,7 +46,7 @@ router.put('/:user', async (req, res, next) => {
         {
           model: Product,
           where: {
-            id: 3
+            id: parseInt(req.body.productId, 10)
           }
         }
       ]
