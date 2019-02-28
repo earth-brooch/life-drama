@@ -28,8 +28,7 @@ export const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
           <Link to="/checkout">
-            {' '}
-            <img src="/shopping-cart-icon.jpg" id="cart-icon" />{' '}
+            <img src="/shopping-cart-icon.jpg" id="cart-icon" />
           </Link>
         </div>
       )}
