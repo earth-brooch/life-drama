@@ -1,15 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getProducts} from '../store/product'
-import ProductList from './ProductList'
 import {postProduct} from '../store/cart'
 
 class AllProducts extends React.Component {
-  // constructor (props) {
-  //   super (props)
-  //   this.props.handleSubmit=this.props.handleSubmit.bind()
-  // }
-
   async componentDidMount() {
     await this.props.fetchProducts()
   }

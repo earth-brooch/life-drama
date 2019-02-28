@@ -20,10 +20,12 @@ const addProduct = product => ({type: ADD_TO_CART, product})
  */
 export const getCart = userId => async dispatch => {
   try {
+    let userCart = []
     if (userId) {
       const {data} = await axios.get(`/api/orders/${userId}`)
+      userCart = data
     }
-    dispatch(gotCart(data || []))
+    dispatch(gotCart(userCart || []))
   } catch (err) {
     console.error(err)
   }
