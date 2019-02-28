@@ -22,8 +22,6 @@ const updatedCart = productIdx => ({type: UPDATED_CART, productIdx})
  * THUNK CREATORS
  */
 export const getCart = userId => async dispatch => {
-  console.log('inside thunk')
-  console.log('userId?', userId)
   try {
     if (userId) {
       const {data} = await axios.get(`/api/orders/${userId}`)

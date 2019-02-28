@@ -7,7 +7,6 @@ module.exports = router
 router.post('/:user', async (req, res, next) => {
   try {
     const {userId, productId, purchasePrice, quantity} = req.body
-    console.log(req.body)
     const item = await Order.create({
       status: 'Cart',
       userId,
