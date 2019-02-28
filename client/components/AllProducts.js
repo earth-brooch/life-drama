@@ -1,11 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getProducts} from '../store/product'
-import {postProduct, updateCart} from '../store/cart'
+import {postProduct, updateCart, getCart} from '../store/cart'
 
 class AllProducts extends React.Component {
   async componentDidMount() {
     await this.props.fetchProducts()
+    await this.props.getCart(this.props.userId)
   }
 
   render() {
@@ -61,6 +62,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchProducts: () => {
     dispatch(getProducts())
+  },
+  getCart: userId => {
+    dispatch(getCart(userId))
   },
 
   handleSubmit: (event, product, userId, cart) => {

@@ -36,8 +36,8 @@ router.get('/:user', async (req, res, next) => {
 })
 
 router.put('/:user', async (req, res, next) => {
-  console.log('req.body', req.body)
   try {
+    console.log('req.body', req.body)
     const productToUpdate = await User.findOne({
       where: {
         id: req.params.user
@@ -51,8 +51,12 @@ router.put('/:user', async (req, res, next) => {
         }
       ]
     })
-
-    res.json(productToUpdate)
+    console.log('productToUpdate.quantity ', productToUpdate.quantity)
+    const updatedProduct = await productToUpdate.update({
+      quantity: productToUpdate.quantity + 1
+    })
+    // console.log('updatedProduct.products',updatedProduct.products)
+    res.json(updatedProduct)
   } catch (err) {
     next(err)
   }
