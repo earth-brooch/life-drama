@@ -65,24 +65,22 @@ const mapDispatchToProps = dispatch => ({
   },
 
   handleSubmit: (event, product, userId, cart) => {
-    if (cart.length) {
-      let index
-      const foundItem = cart.filter((elem, idx) => {
-        if (elem.productId === product.id) {
-          index = idx
-          return true
-        }
-      })
-      if (foundItem.length) {
-        console.log('Found Item in HandleSubmit: ', foundItem)
-        dispatch(updateCart(index, userId, product.id))
+    let index
+    const itemInCart = cart.filter((elem, idx) => {
+      if (elem.productId === product.id) {
+        index = idx
+        return true
       }
+    })
+    if (itemInCart.length) {
+      dispatch(updateCart(index, userId, product.id))
+    } else {
+      const data = {
+        userId,
+        ...product
+      }
+      dispatch(postProduct(userId, data))
     }
-    const data = {
-      userId,
-      ...product
-    }
-    dispatch(postProduct(userId, data))
   }
 })
 

@@ -7,7 +7,6 @@ module.exports = router
 router.post('/:user', async (req, res, next) => {
   try {
     const {userId, productId, purchasePrice, quantity} = req.body
-    console.log(req.body)
     const item = await Order.create({
       status: 'Cart',
       userId,
@@ -20,6 +19,25 @@ router.post('/:user', async (req, res, next) => {
     next(err)
   }
 })
+
+// router.get('/:user', async (req, res, next) => {
+//   try {
+//     const productToUpdate = await User.findOne({
+//       where: {
+//         id: req.params.user,
+//       },
+//       include: [{
+//         model: Product,
+//         where: {
+//           id: 2
+//         }
+//       }]
+//     })
+//     res.json(productToUpdate)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 router.get('/:user', async (req, res, next) => {
   try {
@@ -38,15 +56,24 @@ router.get('/:user', async (req, res, next) => {
 
 router.put('/:user', async (req, res, next) => {
   try {
-    const user = await User.findOne({
+    const productToUpdate = await User.findOne({
       where: {
         id: req.params.user
       },
-      include: Product
+      include: [
+        {
+          model: Product,
+          where: {
+            id: req.body.productId
+          }
+        }
+      ]
     })
-    const userCart = user.products
-    //finish later
-    res.json(userCart)
+    //updatedProduct not updating correctly
+    const updatedProduct = await productToUpdate.products[0].update({
+      quantity: productToUpdate.products[0].quantity + 1
+    })
+    res.json(updatedProduct)
   } catch (err) {
     next(err)
   }

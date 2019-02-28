@@ -53,9 +53,11 @@ export const postProduct = (userId, product) => async dispatch => {
 }
 
 export const updateCart = (index, userId, productId) => async dispatch => {
+  console.log('triggered updateCart thunk')
+  console.log('productId', productId)
   try {
     if (userId) {
-      const {data} = await axios.put(`/api/orders/${userId}`, productId)
+      await axios.put(`/api/orders/${userId}`, {productId})
     }
     dispatch(updatedCart(index))
   } catch (err) {
