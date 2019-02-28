@@ -9,10 +9,11 @@ class Checkout extends React.Component {
 
   render() {
     const {cart, userId} = this.props
-    console.log(this.props)
+    console.log('props', this.props)
+    console.log('product', this.props.product)
     return (
       <div>
-        {cart.length || userId ? (
+        {cart.length ? (
           <div>
             <h2>Buy now... and get your wallet some drama!</h2>
             <div className="container">
@@ -37,7 +38,8 @@ class Checkout extends React.Component {
 
 const mapStateToProps = state => ({
   cart: state.cart,
-  userId: state.user.id
+  userId: state.user.id,
+  product: state.product
 })
 
 const mapDispatchToProps = dispatch => ({
