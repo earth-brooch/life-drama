@@ -37,15 +37,21 @@ router.get('/:user', async (req, res, next) => {
 
 router.put('/:user', async (req, res, next) => {
   try {
-    const user = await User.findOne({
+    const productToUpdate = await User.findOne({
       where: {
         id: req.params.user
       },
-      include: Product
+      include: [
+        {
+          model: Product,
+          where: {
+            id: 3
+          }
+        }
+      ]
     })
-    const userCart = user.products
-    //finish later
-    res.json(userCart)
+
+    res.json(productToUpdate)
   } catch (err) {
     next(err)
   }
