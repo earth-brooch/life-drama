@@ -51,9 +51,6 @@ router.put('/:user', async (req, res, next) => {
       ]
     })
 
-    // const updatedProduct = await productToUpdate.products[0].update({
-    //   quantity: productToUpdate.products[0].quantity + 1
-    // })
     res.json(productToUpdate)
   } catch (err) {
     next(err)
