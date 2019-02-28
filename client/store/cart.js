@@ -23,6 +23,7 @@ const updatedCart = productIdx => ({type: UPDATED_CART, productIdx})
  */
 export const getCart = userId => async dispatch => {
   try {
+    let userCart = []
     if (userId) {
       const {data} = await axios.get(`/api/orders/${userId}`)
       const userCart = data

@@ -9,8 +9,6 @@ class Checkout extends React.Component {
 
   render() {
     const {cart, userId} = this.props
-    console.log('props', this.props)
-    console.log('product', this.props.product)
     return (
       <div>
         {cart.length ? (
@@ -19,9 +17,19 @@ class Checkout extends React.Component {
             <div className="container">
               {cart.map(product => (
                 <div className="product-thumb" key={product.id}>
-                  <img src={product.imageUrl} />
+                  <span>
+                    <img src={product.imageUrl} />{' '}
+                    <button type="button">
+                      <img className="icon" src="/button-delete.png" />
+                    </button>
+                  </span>
                   <h3>The "{product.name}"</h3>
                   <h3>Price: ${product.price}</h3>
+                  <form>
+                    <button>-</button>
+                    <input value={product.quantity} />
+                    <button>+</button>
+                  </form>
                 </div>
               ))}
             </div>
@@ -29,6 +37,8 @@ class Checkout extends React.Component {
         ) : (
           <div> Wait just a moment please... </div>
         )}
+        <h3>Total: </h3>
+        <div>000</div>
       </div>
     )
   }
