@@ -22,8 +22,6 @@ const updatedCart = productIdx => ({type: UPDATED_CART, productIdx})
  * THUNK CREATORS
  */
 export const getCart = userId => async dispatch => {
-  console.log('inside thunk')
-  console.log('userId?', userId)
   try {
     if (userId) {
       const {data} = await axios.get(`/api/orders/${userId}`)
@@ -57,7 +55,7 @@ export const updateCart = (index, userId, productId) => async dispatch => {
   console.log('productId', productId)
   try {
     if (userId) {
-      await axios.put(`/api/orders/${userId}`, {productId})
+      await axios.put(`/api/orders/${userId}`, productId)
     }
     dispatch(updatedCart(index))
   } catch (err) {
