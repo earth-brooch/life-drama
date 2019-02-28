@@ -4,6 +4,7 @@ import {getProducts} from '../store/product'
 import ProductList from './ProductList'
 import {postProduct, updateCart} from '../store/cart'
 
+
 class AllProducts extends React.Component {
   async componentDidMount() {
     await this.props.fetchProducts()
