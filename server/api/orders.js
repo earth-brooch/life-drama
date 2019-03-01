@@ -37,26 +37,20 @@ router.get('/:user', async (req, res, next) => {
 
 router.put('/:user', async (req, res, next) => {
   try {
-    console.log('req.body', req.body)
-    const productToUpdate = await User.findOne({
+    const productId = parseInt(req.body.productId, 10)
+
+    const orderToUpdate = await Order.findOne({
       where: {
-        id: req.params.user
-      },
-      include: [
-        {
-          model: Product,
-          where: {
-            id: parseInt(req.body.productId, 10)
-          }
-        }
-      ]
+        userId: req.params.user,
+        productId: productId
+      }
     })
-    console.log('productToUpdate.quantity ', productToUpdate.quantity)
-    const updatedProduct = await productToUpdate.update({
-      quantity: productToUpdate.quantity + 1
+
+    const updatedOrder = await orderToUpdate.update({
+      quantity: orderToUpdate.quantity + 1
     })
-    // console.log('updatedProduct.products',updatedProduct.products)
-    res.json(updatedProduct)
+
+    res.json(updatedOrder)
   } catch (err) {
     next(err)
   }

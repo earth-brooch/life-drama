@@ -67,16 +67,14 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getCart(userId))
   },
 
-  handleSubmit: (event, product, userId, cart) => {
+  handleSubmit: async (event, product, userId, cart) => {
     let index
-    console.log('cart', cart)
     const itemInCart = cart.filter((elem, idx) => {
       if (elem.id === product.id || elem.productId === product.id) {
         index = idx
         return true
       }
     })
-    console.log('itemInCart', itemInCart)
     if (itemInCart.length) {
       dispatch(updateCart(index, userId, product.id))
     } else {
