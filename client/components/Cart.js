@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {getCart} from '../store/cart'
 
-class Checkout extends React.Component {
+class Cart extends React.Component {
   async componentDidMount() {
     await this.props.getCart(this.props.userId)
   }
@@ -61,4 +61,4 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Checkout)
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)
