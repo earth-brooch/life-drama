@@ -6,6 +6,7 @@ import axios from 'axios'
 const GOT_CART = 'GOT_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
 const UPDATED_CART = 'UPDATED_CART'
+const PLACED_ORDER = 'PLACED_ORDER'
 /**
  * INITIAL STATE
  */
@@ -17,10 +18,12 @@ const defaultCart = []
 const gotCart = products => ({type: GOT_CART, products})
 const addProduct = product => ({type: ADD_TO_CART, product})
 const updatedCart = productIdx => ({type: UPDATED_CART, productIdx})
+const placedOrder = () => ({type: PLACED_ORDER})
 
 /**
  * THUNK CREATORS
  */
+
 export const getCart = userId => async dispatch => {
   try {
     if (userId) {
@@ -61,6 +64,16 @@ export const updateCart = (index, userId, productId) => async dispatch => {
   }
 }
 
+export const placeOrder = userId => async dispatch => {
+  try {
+    if (userId) {
+      await axios.put(`/api/orders/placeOrder/${userId}`, {userId})
+    }
+    dispatch(placedOrder())
+  } catch (err) {
+    console.error(err)
+  }
+}
 /**
  * REDUCER
  */
@@ -75,6 +88,10 @@ export default function(state = defaultCart, action) {
       newState[action.productIdx].quantity =
         newState[action.productIdx].quantity + 1
       return newState
+    }
+    case PLACED_ORDER: {
+      console.log('in reducer')
+      return []
     }
     default:
       return state

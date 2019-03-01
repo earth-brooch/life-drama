@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getCart} from '../store/cart'
+import {Link} from 'react-router-dom'
 
 class Cart extends React.Component {
   async componentDidMount() {
@@ -9,8 +10,6 @@ class Cart extends React.Component {
 
   render() {
     const {cart, userId} = this.props
-    console.log('userId in render', this.props.userId)
-    console.log('cart in render', this.props.cart)
     return (
       <div>
         {cart.length ? (
@@ -41,6 +40,7 @@ class Cart extends React.Component {
         )}
         <h3>Total: </h3>
         <div>000</div>
+        <Link to="/checkout">Checkout</Link>
       </div>
     )
   }
@@ -56,7 +56,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getCart: userId => {
-    console.log('getting cart...')
     dispatch(getCart(userId))
   }
 })

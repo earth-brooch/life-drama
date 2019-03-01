@@ -55,3 +55,18 @@ router.put('/:user', async (req, res, next) => {
     next(err)
   }
 })
+
+router.put('/placeOrder/:userId', async (req, res, next) => {
+  console.log('id', req.params.userId)
+  try {
+    const ordersToUpdate = await Order.update(
+      {status: 'Bought'},
+      {
+        where: {userId: req.params.userId}
+      }
+    )
+    res.json(ordersToUpdate)
+  } catch (err) {
+    next(err)
+  }
+})
