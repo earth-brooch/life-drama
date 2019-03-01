@@ -2,19 +2,27 @@ const router = require('express').Router()
 const User = require('../db/models/user')
 module.exports = router
 
-router.post('/login', async (req, res, next) => {
+async function isAuthenticated(req, res, next) {
   try {
     const user = await User.findOne({where: {email: req.body.email}})
     if (!user) {
       console.log('No such user found:', req.body.email)
-      res.status(401).send('Wrong username and/or password')
+      res.status(401).send('Incorrect username')
     } else if (!user.correctPassword(req.body.password)) {
       console.log('Incorrect password for user:', req.body.email)
-      res.status(401).send('Wrong username and/or password')
+      res.status(401).send('Incorrect password')
     } else {
-      req.login(user, err => (err ? next(err) : res.json(user)))
-      console.log('session', req.session)
+      return next(user)
     }
+  } catch (err) {
+    next(err)
+  }
+}
+
+router.post('/login', isAuthenticated, (user, req, res, next) => {
+  try {
+    req.login(user, err => (err ? next(err) : res.json(user)))
+    res.status(200)
   } catch (err) {
     next(err)
   }
