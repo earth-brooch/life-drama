@@ -3,12 +3,14 @@ import {connect} from 'react-redux'
 import {getCart} from '../store/cart'
 
 class Checkout extends React.Component {
-  componentDidMount() {
-    this.props.getCart(this.props.userId)
+  async componentDidMount() {
+    await this.props.getCart(this.props.userId)
   }
 
   render() {
     const {cart, userId} = this.props
+    console.log('userId in render', this.props.userId)
+    console.log('cart in render', this.props.cart)
     return (
       <div>
         {cart.length ? (
@@ -54,6 +56,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getCart: userId => {
+    console.log('getting cart...')
     dispatch(getCart(userId))
   }
 })
