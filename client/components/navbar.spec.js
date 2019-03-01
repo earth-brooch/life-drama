@@ -34,8 +34,8 @@ describe('Navbar', () => {
     expect(allLinks.at(2).prop('to')).to.be.equal('/signup')
   })
 
-  it('links to the checkout page', () => {
+  it('links to the cart page', () => {
     const allLinks = navbar.find('Link')
-    expect(allLinks.at(3).prop('to')).to.be.equal('/checkout')
+    expect(allLinks.at(3).prop('to')).to.be.equal('/cart')
   })
 })
