@@ -15,7 +15,6 @@ class AllProducts extends React.Component {
   }
 
   async componentDidUpdate() {
-    console.log('ComponentDidUpdate is running...')
     if (this.state.cartExists === false && this.props.userId) {
       await this.props.getCart(this.props.userId)
       this.setState({cartExists: true})
@@ -23,7 +22,6 @@ class AllProducts extends React.Component {
   }
 
   render() {
-    console.log('Rendering...')
     const products = this.props.products
     return (
       <div>
