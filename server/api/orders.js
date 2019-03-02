@@ -55,3 +55,20 @@ router.put('/:user', async (req, res, next) => {
     next(err)
   }
 })
+
+router.delete('/:user/:productId', async (req, res, next) => {
+  try {
+    const productId = parseInt(req.params.productId, 10)
+    console.log('req.body: ', req.body)
+    const response = await Order.destroy({
+      where: {
+        userId: req.params.user,
+        productId: productId
+      }
+    })
+    console.log('response from delete:', response)
+    res.sendStatus(200)
+  } catch (err) {
+    next(err)
+  }
+})
