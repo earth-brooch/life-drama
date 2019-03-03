@@ -31,6 +31,11 @@ const User = db.define('user', {
 
 module.exports = User
 
+//Hooks
+User.beforeCreate((userInstance, optionsObject) => {
+  userInstance.email = userInstance.email.toLowerCase()
+})
+
 /**
  * instanceMethods
  */
