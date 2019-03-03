@@ -68,6 +68,21 @@ router.delete('/:user/:productId', async (req, res, next) => {
     })
     console.log('response from delete:', response)
     res.sendStatus(200)
+    } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/placeOrder/:userId', async (req, res, next) => {
+  console.log('id', req.params.userId)
+  try {
+    const ordersToUpdate = await Order.update(
+      {status: 'Bought'},
+      {
+        where: {userId: req.params.userId}
+      }
+    )
+    res.json(ordersToUpdate)
   } catch (err) {
     next(err)
   }

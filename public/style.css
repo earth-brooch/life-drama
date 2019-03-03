@@ -50,4 +50,32 @@ form div {
 
 .delete-button {
   width: 20px;
+
+.Order-Summary {
+  display: flex;
+  flex-direction: row;
+  border-style: solid;
+  border-color: black;
+  width: 50%;
+  align-content: center;
+  padding: 20px;
+}
+
+.checkout-product {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.Billing-Shipping-Forms {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.Billing-Shipping-Details {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: row;
+  width: 50%;
 }
