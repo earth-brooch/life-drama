@@ -43,6 +43,11 @@ class Cart extends React.Component {
     this.props.removeItem(index, userId, productId)
   }
 
+  routeChange = () => {
+    let path = '/checkout'
+    this.props.history.push(path)
+  }
+
   totalPrice = cart => {
     return cart.reduce((total, item) => {
       if (!item.order) {
