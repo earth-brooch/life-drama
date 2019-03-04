@@ -26,8 +26,18 @@ form div {
   width: 95%;
 }
 
+#total.container {
+  display: flex;
+  justify-content: center;
+  background-color: #565656;
+  width: 83%;
+  padding: 2%;
+  margin: 1%;
+  color: #fcbfcb;
+}
+
 .product-thumb {
-  background-color: pink;
+  background-color: #fcbfcb;
   width: 25%;
   padding: 2%;
   margin: 1%;
@@ -37,6 +47,9 @@ form div {
   width: 45px;
   /* margin: 0 0 -10px 0; */
 }
+
+.delete-button {
+  width: 20px;
 
 .Order-Summary {
   display: flex;
