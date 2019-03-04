@@ -41,15 +41,9 @@ class Cart extends React.Component {
 
   deleteProduct = (event, productId, userId, cart) => {
     event.preventDefault()
-    let index
-    const itemInCart = cart.filter((elem, idx) => {
-      if (elem.id === productId) {
-        index = idx
-        return true
-      }
-    })
+    const data = findItemInCart(cart, productId)
     this.setState({cartNeedsUpdate: true})
-    this.props.removeItem(index, userId, productId)
+    this.props.removeItem(data.index, userId, data.item.productId)
   }
 
   increaseQuantity = (event, product, userId, cart) => {
@@ -66,7 +60,6 @@ class Cart extends React.Component {
     } else {
       this.props.lowerQuantity(data.index, userId, data.item.productId)
     }
-    //this.props.updateItem(item.index, userId, item.id)
   }
 
   routeChange = () => {
@@ -102,7 +95,7 @@ class Cart extends React.Component {
                       onClick={() => {
                         this.deleteProduct(
                           event,
-                          product.id,
+                          product.productId,
                           this.props.userId,
                           this.props.cart
                         )
