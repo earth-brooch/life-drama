@@ -65,8 +65,6 @@ export const postProduct = (userId, product) => async dispatch => {
 }
 
 export const removeItem = (index, userId, productId) => async dispatch => {
-  console.log('inside removeItem thunk!')
-
   try {
     if (userId) {
       console.log('productId inside removeThunk', productId)
@@ -79,8 +77,10 @@ export const removeItem = (index, userId, productId) => async dispatch => {
 }
 
 export const updateCart = (index, userId, productId) => async dispatch => {
+  console.log('inside update thunk and this is the userId: ', userId)
   try {
     if (userId) {
+      console.log('inside update thunk and this is the productId: ', productId)
       await axios.put(`/api/orders/${userId}`, {productId})
     }
     dispatch(updatedCart(index))
