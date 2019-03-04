@@ -58,6 +58,8 @@ async function authenticateSignup(req, res, next) {
     const user = await User.findOne({where: {email: email}})
     if (!isValidEmail(email)) {
       res.status(403).send('Invalid Email')
+    } else if (!isValidPassword(password)) {
+      res.status(403).send('Invalid password')
     } else if (user) {
       res.status(403).send('User already exists')
     } else {
@@ -75,4 +77,13 @@ function isValidEmail(email) {
   console.log('Testing email...')
   const format = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
   return format.test(email)
+}
+
+function isValidPassword(password) {
+  console.log('Testing password...')
+  const format = new RegExp(
+    /(?=.{8,16})(?=.*[a-z]+)(?=.*[A-Z]+)(?=.*[0-9]+)(?=.*[!?&$-]+)/
+  )
+  //Password must be 8-16 chars long, one uppercase, one lowercase, one number, one special char
+  return format.test(password)
 }
