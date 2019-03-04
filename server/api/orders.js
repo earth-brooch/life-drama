@@ -7,14 +7,18 @@ module.exports = router
 router.post('/:user', async (req, res, next) => {
   try {
     const {userId, productId, purchasePrice, quantity} = req.body
-    const item = await Order.create({
-      status: 'Cart',
-      userId,
-      productId,
-      purchasePrice,
-      quantity
+    const [instance, created] = await Order.findOrCreate({
+      where: {
+        status: 'Cart',
+        userId,
+        productId,
+        purchasePrice,
+        quantity
+      }
     })
-    res.json(item)
+
+    console.log('created?', created)
+    res.json(instance)
   } catch (err) {
     next(err)
   }

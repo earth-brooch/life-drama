@@ -43,6 +43,21 @@ class Cart extends React.Component {
     this.props.removeItem(index, userId, productId)
   }
 
+  routeChange = () => {
+    let path = '/checkout'
+    this.props.history.push(path)
+  }
+
+  totalPrice = cart => {
+    return cart.reduce((total, item) => {
+      if (!item.order) {
+        return total + item.quantity * item.price
+      } else {
+        return total + item.quantity * item.order.purchasePrice
+      }
+    }, 0)
+  }
+
   render() {
     const {cart, userId} = this.props
     console.log('userId', userId)
@@ -91,6 +106,9 @@ class Cart extends React.Component {
         )}
         <div className="container" id="total">
           <h3>Total: $100.00</h3>
+          <button type="submit" name="checkout" onClick={this.routeChange}>
+            Checkout
+          </button>
         </div>
       </div>
     )
