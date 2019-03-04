@@ -56,7 +56,6 @@ export const postProduct = (userId, product) => async dispatch => {
         productName: product.name
       })
       product = data
-      console.log(data)
     }
     dispatch(addProduct(product || []))
   } catch (err) {
@@ -65,11 +64,8 @@ export const postProduct = (userId, product) => async dispatch => {
 }
 
 export const removeItem = (index, userId, productId) => async dispatch => {
-  console.log('inside removeItem thunk!')
-
   try {
     if (userId) {
-      console.log('productId inside removeThunk', productId)
       await axios.delete(`/api/orders/${userId}/${productId}`)
     }
     dispatch(deleteProduct(index))
@@ -97,8 +93,6 @@ export const lowerQuantity = (index, userId, productId) => async dispatch => {
         decrease: true
       })
     }
-    console.log('lowerQuantity dispatch index: ', index)
-    console.log('lowerQuantity dispatch productId: ', productId)
     dispatch(decreaseQuantity(index))
   } catch (err) {
     console.error(err)
@@ -121,7 +115,6 @@ export const placeOrder = userId => async dispatch => {
 export default function(state = defaultCart, action) {
   switch (action.type) {
     case GOT_CART:
-      console.log('action.products', action.products)
       return action.products
     case ADD_TO_CART:
       return [...state, action.product]

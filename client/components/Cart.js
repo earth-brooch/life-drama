@@ -6,7 +6,7 @@ import {getCart, removeItem, updateCart, lowerQuantity} from '../store/cart'
 const findItemInCart = (cart, productId) => {
   let index
   const itemInCart = cart.filter((elem, idx) => {
-    if (elem.id === productId) {
+    if (elem.productId === productId) {
       index = idx
       return true
     }
@@ -28,7 +28,6 @@ class Cart extends React.Component {
   }
 
   async componentDidUpdate() {
-    console.log('ComponentDidUpdate is running in the Cart component...')
     if (this.state.cartExists === false && this.props.userId) {
       await this.props.getCart(this.props.userId)
       this.setState({
@@ -55,19 +54,17 @@ class Cart extends React.Component {
 
   increaseQuantity = (event, product, userId, cart) => {
     event.preventDefault()
-    console.log('product.id: ', product.id)
-    const data = findItemInCart(cart, product.id)
-    this.props.updateItem(data.index, userId, data.item.id)
+    const data = findItemInCart(cart, product.productId)
+    this.props.updateItem(data.index, userId, data.item.productId)
   }
 
   decreaseQuantity = (event, product, userId, cart) => {
     event.preventDefault()
-    const data = findItemInCart(cart, product.id)
-    console.log('data: ', data)
+    const data = findItemInCart(cart, product.productId)
     if (data.item.quantity === 1) {
-      this.props.removeItem(data.index, userId, data.item.id)
+      this.props.removeItem(data.index, userId, data.item.productId)
     } else {
-      this.props.lowerQuantity(data.index, userId, data.item.id)
+      this.props.lowerQuantity(data.index, userId, data.item.productId)
     }
     //this.props.updateItem(item.index, userId, item.id)
   }
@@ -79,7 +76,6 @@ class Cart extends React.Component {
 
   totalPrice = cart => {
     return cart.reduce((total, item) => {
-      console.log('total', total, 'item', item)
       if (!item.userId) {
         return total + item.quantity * item.price
       } else {
@@ -90,7 +86,6 @@ class Cart extends React.Component {
 
   render() {
     const {cart, userId} = this.props
-    console.log('userId', userId)
     return (
       <div>
         {cart.length ? (
@@ -133,7 +128,9 @@ class Cart extends React.Component {
                       >
                         -
                       </button>
-                      <input defaultValue={product.quantity} />
+
+                      <input value={product.quantity} />
+                        
                       <button
                         label="increase-button"
                         type="button"
