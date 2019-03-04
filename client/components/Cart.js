@@ -105,7 +105,7 @@ class Cart extends React.Component {
           <div> Wait just a moment please... </div>
         )}
         <div className="container" id="total">
-          <h3>Total: $100.00</h3>
+          <h3>Total: ${this.totalPrice(cart)}</h3>
           <button type="submit" name="checkout" onClick={this.routeChange}>
             Checkout
           </button>
