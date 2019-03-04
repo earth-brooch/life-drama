@@ -133,11 +133,7 @@ class Cart extends React.Component {
                       >
                         -
                       </button>
-                      <input
-                        value={
-                          userId ? product.order.quantity : product.quantity
-                        }
-                      />
+                      <input defaultValue={product.quantity} />
                       <button
                         label="increase-button"
                         type="button"
