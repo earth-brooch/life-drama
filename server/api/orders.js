@@ -28,7 +28,9 @@ router.get('/:user', async (req, res, next) => {
       },
       include: Product
     })
-    const userCart = user.products
+    const userCart = user.products.filter(product => {
+      return product.order.status === 'Cart'
+    })
     res.json(userCart)
   } catch (err) {
     next(err)
@@ -68,7 +70,7 @@ router.delete('/:user/:productId', async (req, res, next) => {
     })
     console.log('response from delete:', response)
     res.sendStatus(200)
-    } catch (err) {
+  } catch (err) {
     next(err)
   }
 })
