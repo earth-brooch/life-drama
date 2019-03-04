@@ -44,11 +44,14 @@ export const postProduct = (userId, product) => async dispatch => {
   try {
     if (userId) {
       const {data} = await axios.post(`/api/orders/${userId}`, {
-        userId: product.userId,
+        userId,
         purchasePrice: Number(product.price),
-        productId: product.id
+        productId: product.id,
+        imageUrl: product.imageUrl,
+        productName: product.name
       })
       product = data
+      console.log(data)
     }
     dispatch(addProduct(product || []))
   } catch (err) {

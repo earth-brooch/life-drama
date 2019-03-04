@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getCart, removeItem} from '../store/cart'
-import {Link} from 'react-router-dom'
 
 class Cart extends React.Component {
   constructor(props) {
@@ -50,10 +49,11 @@ class Cart extends React.Component {
 
   totalPrice = cart => {
     return cart.reduce((total, item) => {
-      if (!item.order) {
+      console.log('total', total, 'item', item)
+      if (!item.userId) {
         return total + item.quantity * item.price
       } else {
-        return total + item.quantity * item.order.purchasePrice
+        return total + item.quantity * item.purchasePrice
       }
     }, 0)
   }
@@ -85,15 +85,17 @@ class Cart extends React.Component {
                     >
                       <img className="delete-button" src="/button-delete.png" />
                     </button>
-                    <h3>The "{product.name}"</h3>
-                    <h3>Price: ${product.price}</h3>
+                    <h3>
+                      The "{product.userId ? product.productName : product.name}"
+                    </h3>
+                    <h3>
+                      Price: ${product.userId
+                        ? product.purchasePrice
+                        : product.price}
+                    </h3>
                     <form>
                       <button>-</button>
-                      <input
-                        value={
-                          userId ? product.order.quantity : product.quantity
-                        }
-                      />
+                      <input value={product.quantity} />
                       <button>+</button>
                     </form>
                   </div>
