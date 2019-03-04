@@ -48,7 +48,7 @@ router.put('/:user', async (req, res, next) => {
     })
 
     if (req.body.decrease === true) {
-      updatedOrder = await orderToUpdate.update({
+      const updatedOrder = await orderToUpdate.update({
         quantity: orderToUpdate.quantity - 1
       })
     } else {
