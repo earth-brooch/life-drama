@@ -128,7 +128,9 @@ class Cart extends React.Component {
                       >
                         -
                       </button>
+
                       <input value={product.quantity} />
+                        
                       <button
                         label="increase-button"
                         type="button"
