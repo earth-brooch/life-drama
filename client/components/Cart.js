@@ -1,7 +1,17 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getCart, removeItem} from '../store/cart'
-import {Link} from 'react-router-dom'
+import {getCart, removeItem, updateCart, lowerQuantity} from '../store/cart'
+
+const findItemInCart = (cart, productId) => {
+  let index
+  const itemInCart = cart.filter((elem, idx) => {
+    if (elem.id === productId) {
+      index = idx
+      return true
+    }
+  })
+  return {item: itemInCart[0], index: index}
+}
 
 class Cart extends React.Component {
   constructor(props) {
@@ -10,7 +20,7 @@ class Cart extends React.Component {
       cartExists: false,
       cartNeedsUpdate: false
     }
-    this.handleSubmit = this.handleSubmit.bind()
+    this.deleteProduct = this.deleteProduct.bind()
   }
   async componentDidMount() {
     await this.props.getCart(this.props.userId)
@@ -29,9 +39,8 @@ class Cart extends React.Component {
     }
   }
 
-  handleSubmit = (event, productId, userId, cart) => {
+  deleteProduct = (event, productId, userId, cart) => {
     event.preventDefault()
-    console.log('handleSubmit product id: ', productId)
     let index
     const itemInCart = cart.filter((elem, idx) => {
       if (elem.id === productId) {
@@ -41,6 +50,25 @@ class Cart extends React.Component {
     })
     this.setState({cartNeedsUpdate: true})
     this.props.removeItem(index, userId, productId)
+  }
+
+  increaseQuantity = (event, product, userId, cart) => {
+    event.preventDefault()
+    console.log('product.id: ', product.id)
+    const data = findItemInCart(cart, product.id)
+    this.props.updateItem(data.index, userId, data.item.id)
+  }
+
+  decreaseQuantity = (event, product, userId, cart) => {
+    event.preventDefault()
+    const data = findItemInCart(cart, product.id)
+    console.log('data: ', data)
+    if (data.item.quantity === 1) {
+      this.props.removeItem(data.index, userId, data.item.id)
+    } else {
+      this.props.lowerQuantity(data.index, userId, data.item.id)
+    }
+    //this.props.updateItem(item.index, userId, item.id)
   }
 
   routeChange = () => {
@@ -75,7 +103,7 @@ class Cart extends React.Component {
                       name="delete-button"
                       type="submit"
                       onClick={() => {
-                        this.handleSubmit(
+                        this.deleteProduct(
                           event,
                           product.id,
                           this.props.userId,
@@ -88,13 +116,29 @@ class Cart extends React.Component {
                     <h3>The "{product.name}"</h3>
                     <h3>Price: ${product.price}</h3>
                     <form>
-                      <button>-</button>
+                      <button
+                        label="decrease-button"
+                        type="button"
+                        onClick={() => {
+                          this.decreaseQuantity(event, product, userId, cart)
+                        }}
+                      >
+                        -
+                      </button>
                       <input
                         value={
                           userId ? product.order.quantity : product.quantity
                         }
                       />
-                      <button>+</button>
+                      <button
+                        label="increase-button"
+                        type="button"
+                        onClick={() => {
+                          this.increaseQuantity(event, product, userId, cart)
+                        }}
+                      >
+                        +
+                      </button>
                     </form>
                   </div>
                 )
@@ -129,6 +173,12 @@ const mapDispatchToProps = dispatch => ({
   },
   removeItem: (index, userId, productId) => {
     dispatch(removeItem(index, userId, productId))
+  },
+  updateItem: (index, userId, productId) => {
+    dispatch(updateCart(index, userId, productId))
+  },
+  lowerQuantity: (index, userId, productId) => {
+    dispatch(lowerQuantity(index, userId, productId))
   }
 })
 
