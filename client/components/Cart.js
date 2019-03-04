@@ -28,7 +28,6 @@ class Cart extends React.Component {
   }
 
   async componentDidUpdate() {
-    console.log('ComponentDidUpdate is running in the Cart component...')
     if (this.state.cartExists === false && this.props.userId) {
       await this.props.getCart(this.props.userId)
       this.setState({
@@ -55,17 +54,13 @@ class Cart extends React.Component {
 
   increaseQuantity = (event, product, userId, cart) => {
     event.preventDefault()
-    console.log('cart: ', cart)
-    console.log('productId: ', product.productId)
     const data = findItemInCart(cart, product.productId)
-    console.log(data)
     this.props.updateItem(data.index, userId, data.item.productId)
   }
 
   decreaseQuantity = (event, product, userId, cart) => {
     event.preventDefault()
     const data = findItemInCart(cart, product.productId)
-    console.log('data: ', data)
     if (data.item.quantity === 1) {
       this.props.removeItem(data.index, userId, data.item.productId)
     } else {
@@ -81,7 +76,6 @@ class Cart extends React.Component {
 
   totalPrice = cart => {
     return cart.reduce((total, item) => {
-      console.log('total', total, 'item', item)
       if (!item.userId) {
         return total + item.quantity * item.price
       } else {
@@ -92,7 +86,6 @@ class Cart extends React.Component {
 
   render() {
     const {cart, userId} = this.props
-    console.log('userId', userId)
     return (
       <div>
         {cart.length ? (
