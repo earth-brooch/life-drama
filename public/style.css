@@ -28,7 +28,7 @@ form div {
 
 #total.container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   background-color: #565656;
   width: 83%;
   padding: 2%;
@@ -50,6 +50,7 @@ form div {
 
 .delete-button {
   width: 20px;
+}
 
 .Order-Summary {
   display: flex;
