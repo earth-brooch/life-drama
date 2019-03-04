@@ -6,7 +6,7 @@ const User = db.model('user')
 
 describe('User model', () => {
   beforeEach(() => {
-    return {force: true}
+    return db.sync({force: true})
   })
 
   describe('instanceMethods', () => {
@@ -16,12 +16,12 @@ describe('User model', () => {
       beforeEach(async () => {
         cody = await User.create({
           email: 'cody@puppybook.com',
-          password: 'bones'
+          password: 'Bones1234!'
         })
       })
 
       it('returns true if the password is correct', () => {
-        expect(cody.correctPassword('bones')).to.be.equal(true)
+        expect(cody.correctPassword('Bones1234!')).to.be.equal(true)
       })
 
       it('returns false if the password is incorrect', () => {
