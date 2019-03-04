@@ -97,6 +97,7 @@ export const placeOrder = userId => async dispatch => {
 export default function(state = defaultCart, action) {
   switch (action.type) {
     case GOT_CART:
+      console.log('action.products', action.products)
       return action.products
     case ADD_TO_CART:
       return [...state, action.product]
@@ -112,7 +113,6 @@ export default function(state = defaultCart, action) {
       return newState
     }
     case PLACED_ORDER: {
-      console.log('in reducer')
       return []
     }
     default:
