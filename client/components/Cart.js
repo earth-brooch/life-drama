@@ -3,15 +3,31 @@ import {connect} from 'react-redux'
 
 import {getCart, removeItem, updateCart, lowerQuantity} from '../store/cart'
 
-const findItemInCart = (cart, productId) => {
+const findItemInCart = (cart, product) => {
   let index
+  let productId
+  if (product.userId) {
+    productId = product.productId
+  } else {
+    productId = product.id
+  }
+
   const itemInCart = cart.filter((elem, idx) => {
-    if (elem.productId === productId) {
+    const cartProductId = elem.userId ? elem.productId : elem.id
+    if (cartProductId === productId) {
       index = idx
       return true
     }
   })
-  return {item: itemInCart[0], index: index}
+  const id = itemInCart[0].productId
+    ? itemInCart[0].productId
+    : itemInCart[0].id
+
+  return {
+    itemId: id,
+    index: index,
+    quantity: itemInCart[0].quantity
+  }
 }
 
 class Cart extends React.Component {
@@ -21,8 +37,8 @@ class Cart extends React.Component {
       cartExists: false,
       cartNeedsUpdate: false
     }
-    this.deleteProduct = this.deleteProduct.bind()
   }
+
   async componentDidMount() {
     await this.props.getCart(this.props.userId)
   }
@@ -39,34 +55,35 @@ class Cart extends React.Component {
     }
   }
 
-  deleteProduct = (event, productId, userId, cart) => {
+  deleteProduct = (event, product, userId, cart) => {
     event.preventDefault()
-    let index
-    const itemInCart = cart.filter((elem, idx) => {
-      if (elem.id === productId) {
-        index = idx
-        return true
-      }
-    })
+    const productToUpdate = findItemInCart(cart, product)
     this.setState({cartNeedsUpdate: true})
-    this.props.removeItem(index, userId, productId)
+    this.props.removeItem(productToUpdate.index, userId, productToUpdate.itemId)
   }
 
   increaseQuantity = (event, product, userId, cart) => {
     event.preventDefault()
-    const data = findItemInCart(cart, product.productId)
-    this.props.updateItem(data.index, userId, data.item.productId)
+    const productToUpdate = findItemInCart(cart, product)
+    this.props.updateItem(productToUpdate.index, userId, productToUpdate.itemId)
   }
 
   decreaseQuantity = (event, product, userId, cart) => {
     event.preventDefault()
-    const data = findItemInCart(cart, product.productId)
-    if (data.item.quantity === 1) {
-      this.props.removeItem(data.index, userId, data.item.productId)
+    const productToUpdate = findItemInCart(cart, product)
+    if (productToUpdate.quantity === 1) {
+      this.props.removeItem(
+        productToUpdate.index,
+        userId,
+        productToUpdate.itemId
+      )
     } else {
-      this.props.lowerQuantity(data.index, userId, data.item.productId)
+      this.props.lowerQuantity(
+        productToUpdate.index,
+        userId,
+        productToUpdate.itemId
+      )
     }
-    //this.props.updateItem(item.index, userId, item.id)
   }
 
   routeChange = () => {
@@ -102,7 +119,7 @@ class Cart extends React.Component {
                       onClick={() => {
                         this.deleteProduct(
                           event,
-                          product.id,
+                          product,
                           this.props.userId,
                           this.props.cart
                         )
