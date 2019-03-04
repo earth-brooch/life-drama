@@ -20,7 +20,8 @@ class Checkout extends React.Component {
 
   calculatePrice = fakeCart => {
     return fakeCart.reduce((accCost, curProd) => {
-      accCost = accCost + curProd.price * curProd.quantity
+      const price = curProd.userId ? curProd.purchasePrice : curProd.price
+      accCost = accCost + price * curProd.quantity
       return accCost
     }, 0)
   }
@@ -31,20 +32,17 @@ class Checkout extends React.Component {
   }
 
   render() {
-    // const fakeCart = [
-    //   {"id": 1, "name": "Dramatic Entrance", "price": "50.00", "quantity": 1,},
-    //   {"id": 2, "name": "Evil Twin", "price": "250.00", "quantity": 1},
-    // ]
-
-    const fakeCart = this.props.cart
+    const cart = this.props.cart
     return (
       <div>
         <h1>Order Summmary</h1>
         <div className="Order-Summary">
           <div>
             <h2>Order Details</h2>
-            {fakeCart.map(product => {
-              const {name, price, quantity, imageUrl} = product
+            {cart.map(product => {
+              let {name, productName, price, purchasePrice, quantity} = product
+              price = product.userId ? purchasePrice : price
+              name = product.userId ? productName : name
               return (
                 <div className="checkout-product" key={name}>
                   <div className="Product-name"> {name}</div>
@@ -55,7 +53,7 @@ class Checkout extends React.Component {
               )
             })}
             <div className="Total">
-              Total Price: ${this.calculatePrice(fakeCart)} <br />
+              Total Price: ${this.calculatePrice(cart)} <br />
               <button
                 type="submit"
                 onClick={() => {

@@ -11,6 +11,18 @@ const Order = db.define('order', {
   },
   purchasePrice: {
     type: Sequelize.DECIMAL(10, 2)
+  },
+  productName: {
+    type: Sequelize.STRING
+  },
+  imageUrl: {
+    type: Sequelize.STRING
+  },
+  productId: {
+    type: Sequelize.INTEGER
+  },
+  userId: {
+    type: Sequelize.INTEGER
   }
 })
 
