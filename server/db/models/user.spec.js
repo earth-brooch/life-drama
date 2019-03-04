@@ -6,7 +6,7 @@ const User = db.model('user')
 
 describe('User model', () => {
   beforeEach(() => {
-    return db.sync({force: true})
+    return {force: true}
   })
 
   describe('instanceMethods', () => {

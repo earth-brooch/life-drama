@@ -6,19 +6,17 @@ module.exports = router
 
 router.post('/:user', async (req, res, next) => {
   try {
-    const {userId, productId, purchasePrice, quantity} = req.body
-    const [instance, created] = await Order.findOrCreate({
-      where: {
-        status: 'Cart',
-        userId,
-        productId,
-        purchasePrice,
-        quantity
-      }
+    const {userId, productId, purchasePrice, imageUrl, productName} = req.body
+    console.log('req.body', req.body)
+    const newItem = await Order.create({
+      status: 'Cart',
+      userId,
+      productId,
+      purchasePrice,
+      imageUrl,
+      productName
     })
-
-    console.log('created?', created)
-    res.json(instance)
+    res.json(newItem)
   } catch (err) {
     next(err)
   }
@@ -26,16 +24,14 @@ router.post('/:user', async (req, res, next) => {
 
 router.get('/:user', async (req, res, next) => {
   try {
-    const user = await User.findOne({
+    console.log('req.body', req.body)
+    const user = await Order.findAll({
       where: {
-        id: req.params.user
-      },
-      include: Product
+        userId: req.params.user,
+        status: 'Cart'
+      }
     })
-    const userCart = user.products.filter(product => {
-      return product.order.status === 'Cart'
-    })
-    res.json(userCart)
+    res.json(user)
   } catch (err) {
     next(err)
   }
@@ -48,9 +44,11 @@ router.put('/:user', async (req, res, next) => {
     const orderToUpdate = await Order.findOne({
       where: {
         userId: req.params.user,
-        productId: productId
+        productId: productId,
+        status: 'Cart'
       }
     })
+
     let updatedOrder
     if (req.body.decrease === true) {
       updatedOrder = await orderToUpdate.update({
