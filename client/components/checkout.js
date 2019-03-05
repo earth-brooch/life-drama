@@ -1,14 +1,28 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getCart, placeOrder} from '../store/cart'
-import {Link} from 'react-router-dom'
+import OrderForm from './OrderForm'
 
 class Checkout extends React.Component {
   constructor() {
     super()
     this.state = {
-      cartExists: false
+      cartExists: false,
+      name: '',
+      email: '',
+      address: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      nameOnCard: '',
+      cardNumber: '',
+      expMonth: '',
+      expYear: '',
+      cvv: ''
     }
+
+    this.onChangeHandler = this.onChangeHandler.bind(this)
+    this.onSubmitHandler = this.onSubmitHandler.bind(this)
   }
 
   async componentDidUpdate() {
@@ -26,12 +40,19 @@ class Checkout extends React.Component {
     }, 0)
   }
 
-  onClickHandler = (event, userId) => {
+  onSubmitHandler = (event, userId) => {
     event.preventDefault()
     this.props.placeOrder(userId)
+    this.props.history.push('/confirmation')
+  }
+
+  onChangeHandler = event => {
+    console.log(event.target.name, event.target.value)
+    this.setState({[event.target.name]: event.target.value})
   }
 
   render() {
+    console.log(this.state)
     const cart = this.props.cart
     return (
       <div>
@@ -54,47 +75,15 @@ class Checkout extends React.Component {
             })}
             <div className="Total">
               Total Price: ${this.calculatePrice(cart)} <br />
-              <button
-                type="submit"
-                onClick={() => {
-                  this.onClickHandler(event, this.props.userId)
-                }}
-              >
-                <Link to="/confirmation">Submit</Link>
-              </button>
             </div>
           </div>
           <div className="Billing-Shipping-Forms">
-            <div className="Billing-Shipping-Forms">
-              {' '}
-              <h2>Shipping Details</h2>
-              <label htmlFor="name">Name</label>
-              <input name="name" />
-              <label htmlFor="email">Email </label>
-              <input name="email" />
-              <label htmlFor="address">Address</label>
-              <input name="address" />
-              <label htmlFor="city">City</label>
-              <input name="city" />
-              <label htmlFor="state">State</label>
-              <input name="state" />
-              <label htmlFor="zipcode">Zip Code</label>
-              <input name="zipcode" />
-            </div>
-            <div className="Billing-Shipping-Forms">
-              {' '}
-              <h2>Payment</h2>
-            </div>
-            <label htmlFor="name-on-card">Name On Card</label>
-            <input name="name-on-card" />
-            <label htmlFor="card-number">Credit card number</label>
-            <input name="card-number" />
-            <label htmlFor="exp-month">Exp Month</label>
-            <input name="exp-month" />
-            <label htmlFor="exp-year">Exp Year</label>
-            <input name="exp-year" />
-            <label htmlFor="cvv">CVV</label>
-            <input name="cvv" /> <br />
+            <OrderForm
+              userId={this.props.userId}
+              state={this.state}
+              onChangeHandler={this.onChangeHandler}
+              onSubmitHandler={this.onSubmitHandler}
+            />
           </div>
         </div>
       </div>

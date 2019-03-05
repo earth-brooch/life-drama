@@ -39,7 +39,7 @@ export const getCart = userId => async dispatch => {
       const userCart = data
       dispatch(gotCart(userCart))
     } else {
-      dispatch(gotCart(JSON.parse(window.localStorage.cart)))
+      dispatch(gotCart(JSON.parse(localStorage.cart)))
     }
   } catch (err) {
     console.error(err)
