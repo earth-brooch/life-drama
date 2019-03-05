@@ -13,6 +13,7 @@ export const Navbar = ({handleClick, isLoggedIn, cart}) => (
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
           <Link to="/">Shop</Link>
+          <Link to="/order-history">Order History</Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
@@ -33,6 +34,7 @@ export const Navbar = ({handleClick, isLoggedIn, cart}) => (
           <Link to="/">Shop</Link>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
+
           <Link to="/cart">
             <div className="item">
               <span className="item-badge fa-angle-right">

@@ -99,6 +99,20 @@ form div {
   width: 50%;
 }
 
+.orderHistory {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.historical-order {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #fcbfcb;
+  margin: 25px;
+  padding: 20px;
+
 .item {
   position: relative;
   padding-top: 20px;
@@ -116,4 +130,5 @@ form div {
   color: white;
   padding: 1px 10px;
   /* font-size: 20px; */
+
 }
