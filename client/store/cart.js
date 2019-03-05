@@ -38,6 +38,8 @@ export const getCart = userId => async dispatch => {
       const {data} = await axios.get(`/api/orders/${userId}`)
       const userCart = data
       dispatch(gotCart(userCart))
+    } else {
+      dispatch(gotCart(JSON.parse(window.localStorage.cart)))
     }
   } catch (err) {
     console.error(err)
@@ -116,26 +118,38 @@ export default function(state = defaultCart, action) {
   switch (action.type) {
     case GOT_CART:
       return action.products
-    case ADD_TO_CART:
-      return [...state, action.product]
-    case DELETE_FROM_CART:
-      return [
+    case ADD_TO_CART: {
+      const res = [...state, action.product]
+      window.localStorage.setItem('cart', JSON.stringify(res))
+      return res
+    }
+    case DELETE_FROM_CART: {
+      const res = [
         ...state.slice(0, action.productIdx),
         ...state.slice(action.productIdx + 1)
       ]
+      window.localStorage.setItem('cart', JSON.stringify(res))
+      return res
+    }
     case DECREASE_ITEM_QUANTITY: {
       const newState = state.slice()
       newState[action.productIdx].quantity =
         newState[action.productIdx].quantity - 1
+
+      window.localStorage.setItem('cart', JSON.stringify(newState))
+
       return newState
     }
     case UPDATED_CART: {
       const newState = state.slice()
       newState[action.productIdx].quantity =
         newState[action.productIdx].quantity + 1
+
+      window.localStorage.setItem('cart', JSON.stringify(newState))
       return newState
     }
     case PLACED_ORDER: {
+      window.localStorage.setItem('cart', JSON.stringify([]))
       return []
     }
     default:
