@@ -1,3 +1,7 @@
+* {
+  font-size: large;
+}
+
 body {
   font-family: sans-serif;
 }
@@ -30,7 +34,7 @@ form div {
   display: flex;
   justify-content: space-between;
   background-color: #565656;
-  width: 83%;
+  width: 95%;
   padding: 2%;
   margin: 1%;
   color: #fcbfcb;
@@ -45,7 +49,21 @@ form div {
 
 .icon {
   width: 45px;
-  /* margin: 0 0 -10px 0; */
+  right: 5%;
+  top: 6%;
+  font-size: 0%;
+  padding: 0.6em;
+  border-radius: 999px;
+  line-height: 0.75em;
+  background: rgb(86, 86, 86);
+  text-align: center;
+  min-width: 2em;
+  font-weight: bold;
+}
+
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  vertical-align: middle;
 }
 
 .delete-button {
@@ -79,4 +97,23 @@ form div {
   display: flex;
   flex-direction: row;
   width: 50%;
+}
+
+.item {
+  position: relative;
+  padding-top: 20px;
+  display: inline-block;
+  margin-top: -20px;
+}
+
+.item-badge {
+  position: absolute;
+  right: -20px;
+  top: 10px;
+  background: #8a8684;
+  text-align: center;
+  border-radius: 30px 30px 30px 30px;
+  color: white;
+  padding: 1px 10px;
+  /* font-size: 20px; */
 }
