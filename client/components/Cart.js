@@ -39,9 +39,9 @@ class Cart extends React.Component {
     }
   }
 
-  async componentDidMount() {
-    await this.props.getCart(this.props.userId)
-  }
+  // async componentDidMount() {
+  //   await this.props.getCart(this.props.userId)
+  // }
 
   async componentDidUpdate() {
     if (this.state.cartExists === false && this.props.userId) {
@@ -147,7 +147,7 @@ class Cart extends React.Component {
                       </button>
 
                       <input value={product.quantity} />
-                        
+
                       <button
                         label="increase-button"
                         type="button"
