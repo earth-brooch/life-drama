@@ -23,7 +23,32 @@ const Order = db.define('order', {
   },
   userId: {
     type: Sequelize.INTEGER
+  },
+  orderNum: {
+    type: Sequelize.INTEGER
+  },
+  orderPlaced: {
+    type: Sequelize.DATE
   }
 })
+
+Order.newOrderNum = async userId => {
+  const userOrders = await Order.findAll({
+    where: {
+      status: 'Bought',
+      userId
+    }
+  })
+
+  const largestOrdNum = userOrders.reduce((largestOrderNum, currProd) => {
+    if (currProd.orderNum > largestOrderNum) return currProd.orderNum
+    else {
+      return largestOrderNum
+    }
+  }, 0)
+
+  const nextOrdNum = largestOrdNum + 1
+  return nextOrdNum
+}
 
 module.exports = Order

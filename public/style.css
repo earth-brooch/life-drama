@@ -80,3 +80,18 @@ form div {
   flex-direction: row;
   width: 50%;
 }
+
+.orderHistory {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.historical-order {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #fcbfcb;
+  margin: 25px;
+  padding: 20px;
+}

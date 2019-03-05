@@ -13,6 +13,7 @@ export const Navbar = ({handleClick, isLoggedIn}) => (
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
           <Link to="/">Shop</Link>
+          <Link to="/order-history">Order History</Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
@@ -26,6 +27,7 @@ export const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/">Shop</Link>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
+
           <Link to="/cart">
             <img src="/shopping-cart-icon.jpg" className="icon" />
           </Link>
