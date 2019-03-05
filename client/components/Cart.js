@@ -108,70 +108,156 @@ class Cart extends React.Component {
         {cart.length ? (
           <div>
             <h2>Buy now... and get your wallet some drama!</h2>
-            <div className="container">
-              {cart.map(product => {
-                return (
-                  <div className="product-thumb" key={product.id}>
-                    <img src={product.imageUrl} />
-                    <button
-                      name="delete-button"
-                      type="submit"
-                      onClick={() => {
-                        this.deleteProduct(
-                          event,
-                          product,
-                          this.props.userId,
-                          this.props.cart
-                        )
-                      }}
-                    >
-                      <img className="delete-button" src="/button-delete.png" />
-                    </button>
-                    <h3>
-                      The "{product.userId ? product.productName : product.name}"
-                    </h3>
-                    <h3>
-                      Price: ${product.userId
-                        ? product.purchasePrice
-                        : product.price}
-                    </h3>
-                    <form>
-                      <button
-                        label="decrease-button"
-                        type="button"
-                        onClick={() => {
-                          this.decreaseQuantity(event, product, userId, cart)
-                        }}
-                      >
-                        -
-                      </button>
+            <div className="container table table-hover table-condensed">
+              <table id="cart" className="table table-hover table-condensed">
+                <thead>
+                  <tr>
+                    <th style={{width: '50%'}}>Product</th>
+                    <th style={{width: '10%'}}>Price</th>
+                    <th style={{width: '8%'}}>Quantity</th>
+                    <th style={{width: '32%'}} />
+                  </tr>
+                </thead>
+                {cart.map(product => {
+                  return (
+                    <tbody className="product-thumb" key={product.id}>
+                      <tr>
+                        <td data-th="Product">
+                          <div className="row">
+                            <div className="col-sm-2 hidden-xs">
+                              <img
+                                src={product.imageUrl}
+                                alt="..."
+                                className="img-responsive"
+                              />
+                            </div>
+                            <div className="col-sm-10">
+                              <h3>
+                                The "{product.userId
+                                  ? product.productName
+                                  : product.name}"
+                              </h3>
+                            </div>
+                          </div>
+                        </td>
+                        <td data-th="Price">
+                          <h3>
+                            ${product.userId
+                              ? product.purchasePrice
+                              : product.price}
+                          </h3>
+                        </td>
+                        <td data-th="Quantity">
+                          <div className="form-group row">
+                            <div className="col-md-8">
+                              <div className="input-group">
+                                <input
+                                  readOnly
+                                  className="form-control text-center"
+                                  type="number"
+                                  value={product.quantity}
+                                />
+                              </div>
+                            </div>
 
-                      <input value={product.quantity} />
+                            <div className="col-md-2">
+                              <div className="btn-group">
+                                <button
+                                  label="decrease-button"
+                                  type="button"
+                                  className="btn btn-default"
+                                  onClick={() => {
+                                    this.decreaseQuantity(
+                                      event,
+                                      product,
+                                      userId,
+                                      cart
+                                    )
+                                  }}
+                                >
+                                  {' '}
+                                  -{' '}
+                                </button>
+                                <button
+                                  label="increase-button"
+                                  type="button"
+                                  className="btn btn-default"
+                                  onClick={() => {
+                                    this.increaseQuantity(
+                                      event,
+                                      product,
+                                      userId,
+                                      cart
+                                    )
+                                  }}
+                                >
+                                  {' '}
+                                  +{' '}
+                                </button>
+                              </div>
+                            </div>
 
+                            {/* <div className="col-md-2">
+                            
+                          </div> */}
+                          </div>
+                        </td>
+                        <td colSpan={2} className="hidden-xs" />
+                        <td className="actions" data-th="">
+                          <button
+                            className="btn btn-default btn-lg"
+                            name="delete-button"
+                            type="submit"
+                            onClick={() => {
+                              this.deleteProduct(
+                                event,
+                                product,
+                                this.props.userId,
+                                this.props.cart
+                              )
+                            }}
+                          >
+                            {' '}
+                            <img
+                              className="delete-button"
+                              src="/button-delete.png"
+                            />
+                          </button>
+                          <i className="fa-angle-right" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  )
+                })}
+                <tfoot>
+                  <tr>
+                    <td>
+                      <a href="/" className="btn btn-warning">
+                        <i className="fa-angle-left" /> Continue Shopping
+                      </a>
+                    </td>
+                    <td>
+                      <h3>Total: ${this.totalPrice(cart)}</h3>
+                    </td>
+                    <td colSpan={1.5} className="hidden-xs" />
+                    <td>
                       <button
-                        label="increase-button"
-                        type="button"
-                        onClick={() => {
-                          this.increaseQuantity(event, product, userId, cart)
-                        }}
+                        className="btn btn-warning btn-block"
+                        type="submit"
+                        name="checkout"
+                        onClick={this.routeChange}
                       >
-                        +
+                        Checkout
                       </button>
-                    </form>
-                  </div>
-                )
-              })}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
           </div>
         ) : (
           <div> Wait just a moment please... </div>
         )}
-        <div className="container" id="total">
-          <h3>Total: ${this.totalPrice(cart)}</h3>
-          <button type="submit" name="checkout" onClick={this.routeChange}>
-            Checkout
-          </button>
-        </div>
       </div>
     )
   }

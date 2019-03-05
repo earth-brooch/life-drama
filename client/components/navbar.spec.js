@@ -11,8 +11,10 @@ enzyme.configure({adapter})
 describe('Navbar', () => {
   let navbar
 
+  const cart = [{quantity: 2}, {quantity: 1}]
+
   beforeEach(() => {
-    navbar = shallow(<Navbar />)
+    navbar = shallow(<Navbar cart={cart} />)
   })
 
   it('contains three Links', () => {

@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-export const Navbar = ({handleClick, isLoggedIn}) => (
+export const Navbar = ({handleClick, isLoggedIn, cart}) => (
   <div>
     <h1>LIFE DRAMA</h1>
     <nav>
@@ -18,7 +18,14 @@ export const Navbar = ({handleClick, isLoggedIn}) => (
             Logout
           </a>
           <Link to="/cart">
-            <img src="/shopping-cart-icon.jpg" className="icon" />
+            <div className="item fa-angle-right">
+              <span className="item-badge">
+                {cart.reduce((total, item) => {
+                  return total + item.quantity
+                }, 0)}
+              </span>
+              <img src="/shopping-cart-icon.jpg" className="icon" />
+            </div>
           </Link>
         </div>
       ) : (
@@ -29,7 +36,14 @@ export const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/signup">Sign Up</Link>
 
           <Link to="/cart">
-            <img src="/shopping-cart-icon.jpg" className="icon" />
+            <div className="item">
+              <span className="item-badge fa-angle-right">
+                {cart.reduce((total, item) => {
+                  return total + item.quantity
+                }, 0)}
+              </span>
+              <img src="/shopping-cart-icon.jpg" className="icon" />
+            </div>
           </Link>
         </div>
       )}
@@ -42,8 +56,10 @@ export const Navbar = ({handleClick, isLoggedIn}) => (
  * CONTAINER
  */
 const mapState = state => {
+  console.log('mapping state and state.cart is', state.cart)
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    cart: state.cart
   }
 }
 
