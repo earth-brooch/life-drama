@@ -1,10 +1,23 @@
 const router = require('express').Router()
-const User = require('../db/models/user')
 const Order = require('../db/models/order')
-const Product = require('../db/models/product')
 module.exports = router
 
-router.post('/:user', async (req, res, next) => {
+function authenticateUser(req, res, next) {
+  try {
+    const user =
+      parseInt(req.params.user, 10) || parseInt(req.params.userId, 10)
+    if (req.user && user === req.user.id) {
+      next()
+    } else {
+      console.log('REDIRECTING...')
+      res.status(403).send("You don't belong here...go back home.")
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
+router.post('/:user', authenticateUser, async (req, res, next) => {
   try {
     const {userId, productId, purchasePrice, imageUrl, productName} = req.body
     const newItem = await Order.create({
@@ -21,7 +34,7 @@ router.post('/:user', async (req, res, next) => {
   }
 })
 
-router.get('/:user', async (req, res, next) => {
+router.get('/:user', authenticateUser, async (req, res, next) => {
   try {
     const user = await Order.findAll({
       where: {
@@ -35,7 +48,21 @@ router.get('/:user', async (req, res, next) => {
   }
 })
 
-router.put('/:user', async (req, res, next) => {
+router.get('/history/:userId', authenticateUser, async (req, res, next) => {
+  try {
+    const orderHistory = await Order.findAll({
+      where: {
+        userId: req.params.userId,
+        status: 'Bought'
+      }
+    })
+    res.json(orderHistory)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/:user', authenticateUser, async (req, res, next) => {
   try {
     const productId = parseInt(req.body.productId, 10)
 
@@ -62,10 +89,10 @@ router.put('/:user', async (req, res, next) => {
   }
 })
 
-router.delete('/:user/:productId', async (req, res, next) => {
+router.delete('/:user/:productId', authenticateUser, async (req, res, next) => {
   try {
     const productId = parseInt(req.params.productId, 10)
-    const response = await Order.destroy({
+    await Order.destroy({
       where: {
         userId: req.params.user,
         productId: productId
@@ -77,12 +104,19 @@ router.delete('/:user/:productId', async (req, res, next) => {
   }
 })
 
-router.put('/placeOrder/:userId', async (req, res, next) => {
+router.put('/placeOrder/:userId', authenticateUser, async (req, res, next) => {
   try {
     const ordersToUpdate = await Order.update(
-      {status: 'Bought'},
       {
-        where: {userId: req.params.userId}
+        status: 'Bought',
+        orderNum: await Order.newOrderNum(req.params.userId),
+        orderPlaced: Date.now()
+      },
+      {
+        where: {
+          userId: req.params.userId,
+          status: 'Cart'
+        }
       }
     )
     res.json(ordersToUpdate)

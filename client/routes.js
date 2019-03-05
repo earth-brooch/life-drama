@@ -8,10 +8,10 @@ import {
   UserHome,
   AllProducts,
   Cart,
-  Checkout
+  Checkout,
+  OrderHistory
 } from './components'
 import {me} from './store'
-import {getCart} from './store/cart'
 
 /**
  * COMPONENT
@@ -35,6 +35,7 @@ class Routes extends Component {
           render={() => <h2>Your order has been placed!</h2>}
         />
         <Route exact path="/checkout" component={Checkout} />
+        <Route exact path="/order-history" component={OrderHistory} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (
