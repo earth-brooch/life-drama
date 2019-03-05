@@ -39,19 +39,19 @@ class Cart extends React.Component {
     }
   }
 
-  // async componentDidMount() {
-  //   await this.props.getCart(this.props.userId)
-  // }
+  async componentDidMount() {
+    await this.props.getCart(this.props.userId)
+  }
 
   async componentDidUpdate() {
-    if (this.state.cartExists === false && this.props.userId) {
-      await this.props.getCart(this.props.userId)
+    if (this.state.cartExists === false) {
       this.setState({
         cartExists: true
       })
-    } else if (this.state.cartNeedsUpdate === true) {
       await this.props.getCart(this.props.userId)
+    } else if (this.state.cartNeedsUpdate === true) {
       this.setState({cartNeedsUpdate: false})
+      await this.props.getCart(this.props.userId)
     }
   }
 

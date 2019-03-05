@@ -18,8 +18,8 @@ class Checkout extends React.Component {
     }
   }
 
-  calculatePrice = fakeCart => {
-    return fakeCart.reduce((accCost, curProd) => {
+  calculatePrice = cart => {
+    return cart.reduce((accCost, curProd) => {
       const price = curProd.userId ? curProd.purchasePrice : curProd.price
       accCost = accCost + price * curProd.quantity
       return accCost
