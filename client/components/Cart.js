@@ -232,9 +232,14 @@ class Cart extends React.Component {
                 <tfoot>
                   <tr>
                     <td>
-                      <a href="/" className="btn btn-warning">
+                      <button
+                        className="btn btn-warning"
+                        onClick={() => {
+                          this.props.history.push('/')
+                        }}
+                      >
                         <i className="fa-angle-left" /> Continue Shopping
-                      </a>
+                      </button>
                     </td>
                     <td>
                       <h3>Total: ${this.totalPrice(cart)}</h3>

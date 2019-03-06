@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Order = require('../db/models/order')
+const path = require('path')
 module.exports = router
 
 function authenticateUser(req, res, next) {
@@ -9,8 +10,9 @@ function authenticateUser(req, res, next) {
     if (req.user && user === req.user.id) {
       next()
     } else {
-      console.log('REDIRECTING...')
-      res.status(403).send("You don't belong here...go back home.")
+      res
+        .status(403)
+        .sendFile(path.join(__dirname, '..', '../public/page404.html'))
     }
   } catch (error) {
     next(error)

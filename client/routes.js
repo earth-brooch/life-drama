@@ -9,7 +9,8 @@ import {
   AllProducts,
   Cart,
   Checkout,
-  OrderHistory
+  OrderHistory,
+  Page404
 } from './components'
 import {me} from './store'
 
@@ -36,8 +37,8 @@ class Routes extends Component {
         />
         <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/order-history" component={OrderHistory} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -45,7 +46,8 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        {/* <Route component={Login} /> */}
+        <Route component={Page404} />
       </Switch>
     )
   }

@@ -35,7 +35,7 @@ class AllProducts extends React.Component {
                   <div className="product-thumb" key={product.id}>
                     <img src={product.imageUrl} />
                     <h3>The "{product.name}"</h3>
-                    <h3>Description: {product.description}</h3>
+                    <h3>{product.description}</h3>
                     <h3>Price: ${product.price}</h3>
                     <button
                       type="button"
