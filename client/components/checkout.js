@@ -47,12 +47,10 @@ class Checkout extends React.Component {
   }
 
   onChangeHandler = event => {
-    console.log(event.target.name, event.target.value)
     this.setState({[event.target.name]: event.target.value})
   }
 
   render() {
-    console.log(this.state)
     const cart = this.props.cart
     return (
       <div>
