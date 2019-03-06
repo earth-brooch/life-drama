@@ -8,7 +8,7 @@
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {default as AllProducts} from './AllProducts'
-export {default as Cart} from './cart'
+export {default as Cart} from './Cart'
 export {default as Checkout} from './checkout'
 export {default as OrderHistory} from './OrderHistory'
 export {Login, Signup} from './auth-form'
