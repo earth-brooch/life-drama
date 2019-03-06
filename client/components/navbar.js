@@ -56,7 +56,6 @@ export const Navbar = ({handleClick, isLoggedIn, cart}) => (
  * CONTAINER
  */
 const mapState = state => {
-  console.log('mapping state and state.cart is', state.cart)
   return {
     isLoggedIn: !!state.user.id,
     cart: state.cart
