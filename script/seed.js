@@ -29,7 +29,7 @@ async function seed() {
     Product.create({
       name: 'Back from the Dead',
       description:
-        'The next generation of our insanely popular "Now They\'ll Be Sorry," package, "Back From The Dead" allows you to enjoy all the grief and regret felt by your network at your passing, combined with the most dramatic entrance of them all.',
+        'The next generation of our insanely popular Now They\'ll Be Sorry, package, Back From The Dead" allows you to enjoy all the grief and regret felt by your network at your passing, combined with the most dramatic entrance of them all.',
       price: 500
     }),
     Product.create({

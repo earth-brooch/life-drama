@@ -88,6 +88,7 @@ const mapDispatchToProps = dispatch => ({
         return true
       }
     })
+
     if (itemInCart.length) {
       dispatch(updateCart(index, userId, product.id))
     } else {
